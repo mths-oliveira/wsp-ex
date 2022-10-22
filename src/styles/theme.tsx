@@ -59,6 +59,22 @@ export const theme = extendTheme({
           transform: "initial",
         },
       },
+      "@keyframes slade-x-in": {
+        from: {
+          transform: "translateX(-100%)",
+        },
+        to: {
+          transform: "initial",
+        },
+      },
+      "@keyframes slade-x-out": {
+        from: {
+          transform: "initial",
+        },
+        to: {
+          transform: "translateX(-100%)",
+        },
+      },
       "@keyframes scale-in": {
         from: {
           opacity: 0,
@@ -67,6 +83,16 @@ export const theme = extendTheme({
         to: {
           opacity: 1,
           transform: "scale(1)",
+        },
+      },
+      "@keyframes scale-out": {
+        from: {
+          opacity: 1,
+          transform: "scale(1)",
+        },
+        to: {
+          opacity: 0,
+          transform: "scale(0.9)",
         },
       },
     },
