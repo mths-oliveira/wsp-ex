@@ -83,7 +83,7 @@ export default function () {
           </Box>
         </Flex>
         <Flex
-          height="100vh"
+          flexGrow="1"
           flexDir="column"
           overflowY="auto"
           padding={["0", "5rem"]}
@@ -101,7 +101,11 @@ export default function () {
               onOpen={modal.onOpen}
             />
           </Flex>
-          <Flex flexDir="column" overflowY="auto" height="100%">
+          <Flex
+            flexDir="column"
+            overflowY="auto"
+            height={["calc(100% - (64px + 56px + 48px))", "100%"]}
+          >
             <Heading
               fontSize={["1.25rem", "1.5rem"]}
               margin={["1rem", "0"]}
