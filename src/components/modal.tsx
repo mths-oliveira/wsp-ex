@@ -4,17 +4,14 @@ import { useEffect, useRef, useState } from "react"
 const animationDuration = 200
 export function Modal({ isOpen, onClose, children }: ModalProps) {
   const [display, setDisplay] = useState<"none" | "flex">("none")
-  const [animation, setAnimation] = useState<"scale-out" | "scale-in">(
-    "scale-out"
-  )
   useEffect(() => {
     if (isOpen) {
-      const input = document.getElementsByTagName("input")[0]
-      input.focus()
       setDisplay("flex")
-      setAnimation("scale-in")
+      const input = document.getElementById("modal-input")
+      setTimeout(() => {
+        input.focus()
+      }, animationDuration)
     } else {
-      setAnimation("scale-out")
       setTimeout(() => {
         setDisplay("none")
       }, animationDuration)
@@ -30,7 +27,9 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
       display={display}
     >
       <Flex
-        animation={`${animationDuration}ms forwards ${animation}`}
+        animation={`${animationDuration}ms forwards scale-${
+          isOpen ? "in" : "out"
+        }`}
         flexDirection="column"
         bg="primary"
         overflowY="auto"

@@ -11,6 +11,7 @@ export function IconInput(props: InputProps) {
       borderRadius="6px"
     >
       <Input
+        id="modal-input"
         bg="transparent"
         border="none"
         textTransform="capitalize"

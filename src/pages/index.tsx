@@ -20,12 +20,17 @@ import {
 import {
   MdArrowBack,
   MdChangeCircle,
+  MdDarkMode,
+  MdLightMode,
   MdMenu,
   MdOutlineCalculate,
+  MdOutlineChangeCircle,
   MdOutlineDarkMode,
   MdOutlineLightMode,
   MdOutlineMonetizationOn,
   MdOutlineSchedule,
+  MdSchedule,
+  MdScheduleSend,
 } from "react-icons/md"
 import { useState } from "react"
 import { ClassesController } from "../backend/controllers/classes"
@@ -179,12 +184,12 @@ export default function () {
           <MenuItem onClick={toggleColorMode}>
             {colorMode === "dark" ? (
               <>
-                <MdOutlineLightMode />
+                <MdLightMode />
                 <Text>Modo Claro</Text>
               </>
             ) : (
               <>
-                <MdOutlineDarkMode />
+                <MdDarkMode />
                 <Text>Modo Escuro</Text>
               </>
             )}
@@ -197,15 +202,8 @@ export default function () {
         overflowY="auto"
         padding={["0", "5rem"]}
       >
-        <Heading
-          fontSize="1.5rem"
-          marginBottom="1.5rem"
-          display={["none", "inline"]}
-        >
-          Tabela de Horários
-        </Heading>
         <Flex
-          marginY="1rem"
+          marginY="1.5rem"
           alignItems="center"
           justifyContent="space-between"
           display={["flex", "none"]}
@@ -224,6 +222,14 @@ export default function () {
             onClick={drawer.onOpen}
           />
         </Flex>
+        <Heading
+          fontSize="1.5rem"
+          marginBottom="1.5rem"
+          display={["none", "inline"]}
+        >
+          Tabela de Horários
+        </Heading>
+
         <Box
           border="sm"
           borderRadius="md"

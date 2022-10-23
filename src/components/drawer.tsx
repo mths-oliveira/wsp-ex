@@ -4,15 +4,10 @@ import { useEffect, useState } from "react"
 const animationDuration = 300
 export function Drawer({ isOpen, onClose, children }: ModalProps) {
   const [display, setDisplay] = useState<"none" | "flex">("none")
-  const [animation, setAnimation] = useState<"slade-x-out" | "slade-x-in">(
-    "slade-x-out"
-  )
   useEffect(() => {
     if (isOpen) {
       setDisplay("flex")
-      setAnimation("slade-x-in")
     } else {
-      setAnimation("slade-x-out")
       setTimeout(() => {
         setDisplay("none")
       }, animationDuration)
@@ -45,7 +40,9 @@ export function Drawer({ isOpen, onClose, children }: ModalProps) {
           display={display}
         >
           <Flex
-            animation={`${animationDuration}ms forwards ${animation}`}
+            animation={`${animationDuration}ms forwards slade-x-${
+              isOpen ? "in" : "out"
+            }`}
             height="100%"
             width="15rem"
             flexShrink="0"
