@@ -83,7 +83,7 @@ export default function () {
           </Box>
         </Flex>
         <Flex
-          flexGrow="1"
+          height="100vh"
           flexDir="column"
           overflowY="auto"
           padding={["0", "5rem"]}
