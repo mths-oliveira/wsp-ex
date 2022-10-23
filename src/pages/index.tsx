@@ -85,6 +85,7 @@ export default function () {
         </Flex>
         <Flex
           flexGrow="1"
+          maxHeight="100vh"
           flexDir="column"
           overflowY="auto"
           padding={["0", "5rem"]}

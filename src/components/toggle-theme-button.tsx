@@ -1,5 +1,5 @@
 import { useColorMode } from "@chakra-ui/react"
-import { MdDarkMode, MdLightMode } from "react-icons/md"
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md"
 import { IconButton } from "./icon-button"
 
 export function ToggleThemeButton() {
@@ -8,7 +8,7 @@ export function ToggleThemeButton() {
     <IconButton
       bg="secondary"
       marginX="1rem"
-      icon={colorMode === "dark" ? MdLightMode : MdDarkMode}
+      icon={colorMode === "dark" ? MdOutlineLightMode : MdDarkMode}
       onClick={toggleColorMode}
     />
   )

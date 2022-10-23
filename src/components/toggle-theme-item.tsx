@@ -1,5 +1,5 @@
 import { Text, useColorMode } from "@chakra-ui/react"
-import { MdDarkMode, MdLightMode } from "react-icons/md"
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md"
 import { MenuItem } from "./menu-item"
 
 export function ToggleThemeItem() {
@@ -8,7 +8,7 @@ export function ToggleThemeItem() {
     <MenuItem onClick={toggleColorMode}>
       {colorMode === "dark" ? (
         <>
-          <MdLightMode />
+          <MdOutlineLightMode />
           <Text>Modo Claro</Text>
         </>
       ) : (
