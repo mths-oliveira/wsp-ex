@@ -101,7 +101,7 @@ export default function () {
               onOpen={modal.onOpen}
             />
           </Flex>
-          <Flex flexDir="column" overflowY="auto" flexGrow="1">
+          <Flex flexDir="column" overflowY="auto" height="100%">
             <Heading
               fontSize={["1.25rem", "1.5rem"]}
               margin={["1rem", "0"]}
