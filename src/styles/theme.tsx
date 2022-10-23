@@ -78,7 +78,7 @@ export const theme = extendTheme({
       "@keyframes scale-in": {
         from: {
           opacity: 0,
-          transform: "scale(0.9)",
+          transform: "scale(0.8)",
         },
         to: {
           opacity: 1,
@@ -92,7 +92,7 @@ export const theme = extendTheme({
         },
         to: {
           opacity: 0,
-          transform: "scale(0.9)",
+          transform: "scale(0.8)",
         },
       },
     },

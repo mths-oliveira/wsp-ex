@@ -11,7 +11,11 @@ interface IconButtonProps extends CenterProps {
   icon: IconType | ComponentWithAs<"svg", IconProps>
 }
 
-export function IconButton({ icon, fontSize, ...rest }: IconButtonProps) {
+export function IconButton({
+  icon,
+  fontSize = "1.5rem",
+  ...rest
+}: IconButtonProps) {
   return (
     <Center as="button" width="48px" height="48px" borderRadius="md" {...rest}>
       <Icon as={icon} fontSize={fontSize} />

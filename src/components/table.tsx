@@ -8,6 +8,9 @@ export function Table({ sx, children, ...props }: TableProps) {
         "*>tr>th": {
           color: "altText",
         },
+        "&>caption": {
+          color: "text",
+        },
         "&>caption, *>tr>*": {
           padding: ["1rem", "1rem 1.5rem"],
         },

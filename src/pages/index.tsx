@@ -3,9 +3,6 @@ import {
   Flex,
   Heading,
   List,
-  ListItem,
-  Stack,
-  StackProps,
   TableCaption,
   Tbody,
   Td,
@@ -14,28 +11,12 @@ import {
   Th,
   Thead,
   Tr,
-  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react"
-import {
-  MdArrowBack,
-  MdChangeCircle,
-  MdDarkMode,
-  MdLightMode,
-  MdMenu,
-  MdOutlineCalculate,
-  MdOutlineChangeCircle,
-  MdOutlineDarkMode,
-  MdOutlineLightMode,
-  MdOutlineMonetizationOn,
-  MdOutlineSchedule,
-  MdSchedule,
-  MdScheduleSend,
-} from "react-icons/md"
+import { MdArrowBack } from "react-icons/md"
 import { useState } from "react"
 import { ClassesController } from "../backend/controllers/classes"
 import { Timezone, TimezoneImp } from "../backend/models/timezone"
-import { FlagImage } from "../components/flag-image"
 import { IconButton } from "../components/icon-button"
 import { IconInput } from "../components/icon-input"
 import { Modal } from "../components/modal"
@@ -45,23 +26,9 @@ import { AnimatedListItem } from "../components/animate-list-item"
 import { TimezoneController } from "../backend/controllers/timezones"
 import { Profile } from "../components/profile"
 import { removeAccent } from "../utils/remove-accent"
-import { Drawer } from "../components/drawer"
-
-function MenuItem(props: StackProps) {
-  return (
-    <Stack
-      spacing="1rem"
-      direction="row"
-      alignItems="center"
-      padding="1rem 1.5rem"
-      cursor="pointer"
-      _hover={{
-        bg: "secondary",
-      }}
-      {...props}
-    />
-  )
-}
+import { IconProfile } from "../components/icon-profile"
+import { NavBar } from "../components/navbar"
+import { ToggleThemeButton } from "../components/toggle-theme-button"
 
 const classesController = new ClassesController()
 const timezoneController = new TimezoneController()
@@ -70,8 +37,6 @@ const initialTimezone = new TimezoneImp("America/Sao_Paulo")
 
 export default function () {
   const modal = useDisclosure()
-  const drawer = useDisclosure()
-  const { colorMode, toggleColorMode } = useColorMode()
   const [timezone, setTimezone] = useState(initialTimezone)
   const classes = classesController.findAllClassesInTimeZone(timezone.offset)
   const [query, setQuery] = useState("")
@@ -88,7 +53,115 @@ export default function () {
   }
   const filteredTimezones = timezones.filter(filter)
   return (
-    <Flex width="100vw" height="100vh">
+    <>
+      <Flex width="100vw" height="100vh">
+        <Flex
+          as="aside"
+          display={["none", "flex"]}
+          height="100%"
+          width="15rem"
+          flexShrink="0"
+          flexDirection="column"
+          bg="primary"
+          border="sm"
+          borderColor="borderColor"
+          onClick={(e) => {
+            e.stopPropagation()
+          }}
+        >
+          <Box as="header" padding="2.25rem 1rem">
+            <IconProfile
+              country={timezone.country}
+              title={timezone.city}
+              text={timezone.offsetName}
+              onOpen={modal.onOpen}
+            />
+          </Box>
+          <NavBar />
+          <Box as="footer" paddingY="2.25rem">
+            <ToggleThemeButton />
+          </Box>
+        </Flex>
+        <Flex
+          flexGrow="1"
+          flexDir="column"
+          overflowY="auto"
+          padding={["0", "5rem"]}
+        >
+          <Flex
+            marginY="1.5rem"
+            alignItems="center"
+            justifyContent="space-between"
+            display={{ sm: "none" }}
+          >
+            <IconProfile
+              country={timezone.country}
+              title={timezone.city}
+              text={timezone.offsetName}
+              onOpen={modal.onOpen}
+            />
+          </Flex>
+          <Flex flexDir="column" overflowY="auto" flexGrow="1">
+            <Heading
+              fontSize={["1.25rem", "1.5rem"]}
+              margin={["1rem", "0"]}
+              marginBottom={{ sm: "1.5rem" }}
+            >
+              Tabela de Horários
+            </Heading>
+
+            <Box
+              border="sm"
+              borderRadius="md"
+              borderColor={["transparent", "borderColor"]}
+              padding={["0", "1rem"]}
+              maxWidth="60rem"
+            >
+              <Table>
+                <TableCaption>
+                  Horas em que começam a primeira e a última aula. (Horário de{" "}
+                  {timezone.city}, {timezone.country})
+                </TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>Dias</Th>
+                    <Th>De</Th>
+                    <Th>Às</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {classes.map(
+                    ({ firstClassSchedule, lastClassSchedule, weekdays }) => (
+                      <Tr key={weekdays}>
+                        <Td width="100%">{weekdays}</Td>
+                        <Td>{firstClassSchedule}</Td>
+                        <Td>{lastClassSchedule}</Td>
+                      </Tr>
+                    )
+                  )}
+                </Tbody>
+                <Tfoot>
+                  <Tr>
+                    <Th>Dias</Th>
+                    <Th>De</Th>
+                    <Th>Às</Th>
+                  </Tr>
+                </Tfoot>
+              </Table>
+            </Box>
+          </Flex>
+          <Flex as="footer" display={{ sm: "none" }}>
+            <NavBar
+              flexDir="row"
+              justifyContent="center"
+              borderTop="sm"
+              borderColor="borderColor"
+            >
+              <ToggleThemeButton />
+            </NavBar>
+          </Flex>
+        </Flex>
+      </Flex>
       <Modal isOpen={modal.isOpen} onClose={modal.onClose}>
         <Flex>
           <IconButton
@@ -97,7 +170,7 @@ export default function () {
             onClick={modal.onClose}
           />
           <IconInput
-            placeholder=""
+            placeholder="País, cidade ou fuso horário"
             onChange={debounce((e) => {
               setQuery(e.target.value)
             })}
@@ -128,148 +201,6 @@ export default function () {
           )}
         </List>
       </Modal>
-      <Drawer isOpen={drawer.isOpen} onClose={drawer.onClose}>
-        <Flex
-          flexDir="column"
-          alignItems="center"
-          textAlign="center"
-          onClick={modal.onOpen}
-          as="header"
-          padding="2.25rem 1rem"
-          cursor="pointer"
-        >
-          <Box position="relative">
-            <FlagImage country={timezone.country} width="5rem" />
-            <Box
-              position="absolute"
-              bottom="0.5rem"
-              right="0.5rem"
-              bg="primary"
-              padding="2px"
-              borderRadius="full"
-            >
-              <MdChangeCircle />
-            </Box>
-          </Box>
-          <Box fontWeight="600">
-            <Text>{timezone.city}</Text>
-            <Text fontSize="sm" color="altText">
-              {timezone.offsetName}
-            </Text>
-          </Box>
-        </Flex>
-        <Box height="100%" as="nav">
-          <List>
-            <ListItem>
-              <MenuItem>
-                <MdOutlineSchedule />
-                <Text>Tabela de Horários</Text>
-              </MenuItem>
-            </ListItem>
-            <ListItem>
-              <MenuItem>
-                <MdOutlineMonetizationOn />
-                <Text>Tabela de Preços</Text>
-              </MenuItem>
-            </ListItem>
-            <ListItem>
-              <MenuItem>
-                <MdOutlineCalculate />
-                <Text>Calcular Pacote</Text>
-              </MenuItem>
-            </ListItem>
-          </List>
-        </Box>
-        <Box as="footer" paddingY="2.25rem">
-          <MenuItem onClick={toggleColorMode}>
-            {colorMode === "dark" ? (
-              <>
-                <MdLightMode />
-                <Text>Modo Claro</Text>
-              </>
-            ) : (
-              <>
-                <MdDarkMode />
-                <Text>Modo Escuro</Text>
-              </>
-            )}
-          </MenuItem>
-        </Box>
-      </Drawer>
-      <Flex
-        flexGrow="1"
-        flexDir="column"
-        overflowY="auto"
-        padding={["0", "5rem"]}
-      >
-        <Flex
-          marginY="1.5rem"
-          alignItems="center"
-          justifyContent="space-between"
-          display={["flex", "none"]}
-        >
-          <Profile
-            onClick={modal.onOpen}
-            country={timezone.country}
-            title={timezone.city}
-            text={timezone.offsetName}
-          />
-          <IconButton
-            icon={MdMenu}
-            marginX="1rem"
-            fontSize="1.5rem"
-            bg="secondary"
-            onClick={drawer.onOpen}
-          />
-        </Flex>
-        <Heading
-          fontSize="1.5rem"
-          marginBottom="1.5rem"
-          display={["none", "inline"]}
-        >
-          Tabela de Horários
-        </Heading>
-
-        <Box
-          border="sm"
-          borderRadius="md"
-          borderColor={["transparent", "borderColor"]}
-          padding={["0", "1rem"]}
-          maxWidth="60rem"
-        >
-          <Table>
-            <TableCaption>
-              Horas em que começam a primeira e a última aula. (Horário de{" "}
-              {timezone.city}, {timezone.country})
-            </TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Dias</Th>
-                <Th>De</Th>
-                <Th>Às</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {classes.map(
-                ({ firstClassSchedule, lastClassSchedule, weekdays }) => (
-                  <Tr key={weekdays}>
-                    <Td width="100%">{weekdays}</Td>
-                    <Td>{firstClassSchedule}</Td>
-                    <Td>{lastClassSchedule}</Td>
-                  </Tr>
-                )
-              )}
-            </Tbody>
-            <Tfoot>
-              <Tr>
-                <Th>Dias</Th>
-                <Th>De</Th>
-                <Th>Às</Th>
-              </Tr>
-            </Tfoot>
-          </Table>
-        </Box>
-      </Flex>
-    </Flex>
+    </>
   )
 }
