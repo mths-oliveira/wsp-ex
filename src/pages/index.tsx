@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react"
 import {
   MdArrowBack,
+  MdChangeCircle,
   MdMenu,
   MdOutlineCalculate,
   MdOutlineDarkMode,
@@ -80,7 +81,7 @@ export default function () {
         regexp.exec(removeAccent(timezone.country))
     )
   }
-
+  const filteredTimezones = timezones.filter(filter)
   return (
     <Flex width="100vw" height="100vh">
       <Modal isOpen={modal.isOpen} onClose={modal.onClose}>
@@ -98,39 +99,60 @@ export default function () {
           />
         </Flex>
         <List>
-          {timezones.filter(filter).map((timezone, i) => (
-            <AnimatedListItem
-              index={i}
-              key={timezone.city}
-              onClick={() => {
-                setTimezone(timezone)
-                modal.onClose()
-              }}
-            >
-              <Profile
-                country={timezone.country}
-                title={timezone.city}
-                text={timezone.offsetName}
-              />
-            </AnimatedListItem>
-          ))}
+          {filteredTimezones.length > 0 ? (
+            filteredTimezones.map((timezone, i) => (
+              <AnimatedListItem
+                index={i}
+                key={timezone.city}
+                onClick={() => {
+                  setTimezone(timezone)
+                  modal.onClose()
+                }}
+              >
+                <Profile
+                  country={timezone.country}
+                  title={timezone.city}
+                  text={timezone.offsetName}
+                />
+              </AnimatedListItem>
+            ))
+          ) : (
+            <Text as="li" padding="1.5rem" fontWeight="600">
+              Nenhum resultado encontrado para: "{query}"
+            </Text>
+          )}
         </List>
       </Modal>
       <Drawer isOpen={drawer.isOpen} onClose={drawer.onClose}>
-        <Box
+        <Flex
+          flexDir="column"
+          alignItems="center"
+          textAlign="center"
           onClick={modal.onOpen}
           as="header"
           padding="2.25rem 1rem"
           cursor="pointer"
         >
-          <FlagImage country={timezone.country} width="5rem" marginX="auto" />
-          <Box fontWeight="600" textAlign="center">
+          <Box position="relative">
+            <FlagImage country={timezone.country} width="5rem" />
+            <Box
+              position="absolute"
+              bottom="0.5rem"
+              right="0.5rem"
+              bg="primary"
+              padding="2px"
+              borderRadius="full"
+            >
+              <MdChangeCircle />
+            </Box>
+          </Box>
+          <Box fontWeight="600">
             <Text>{timezone.city}</Text>
             <Text fontSize="sm" color="altText">
               {timezone.offsetName}
             </Text>
           </Box>
-        </Box>
+        </Flex>
         <Box height="100%" as="nav">
           <List>
             <ListItem>

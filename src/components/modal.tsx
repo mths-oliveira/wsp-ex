@@ -1,20 +1,22 @@
 import { ModalProps, Center, Flex } from "@chakra-ui/react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const animationDuration = 200
 export function Modal({ isOpen, onClose, children }: ModalProps) {
-  const modalRef = useRef<HTMLDivElement>()
+  const [display, setDisplay] = useState<"none" | "flex">("none")
+  const [animation, setAnimation] = useState<"scale-out" | "scale-in">(
+    "scale-out"
+  )
   useEffect(() => {
-    const boxRef = modalRef.current.childNodes[0] as HTMLDivElement
-    const input = document.getElementsByTagName("input")[0] as HTMLInputElement
     if (isOpen) {
-      modalRef.current.style.display = "flex"
-      boxRef.style.animation = `${animationDuration}ms forwards scale-in`
+      const input = document.getElementsByTagName("input")[0]
       input.focus()
+      setDisplay("flex")
+      setAnimation("scale-in")
     } else {
-      boxRef.style.animation = `${animationDuration}ms forwards scale-out`
+      setAnimation("scale-out")
       setTimeout(() => {
-        modalRef.current.style.display = isOpen ? "flex" : "none"
+        setDisplay("none")
       }, animationDuration)
     }
   }, [isOpen])
@@ -25,10 +27,10 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
       zIndex={10}
       inset="0"
       onClick={onClose}
-      ref={modalRef}
-      display="none"
+      display={display}
     >
       <Flex
+        animation={`${animationDuration}ms forwards ${animation}`}
         flexDirection="column"
         bg="primary"
         overflowY="auto"

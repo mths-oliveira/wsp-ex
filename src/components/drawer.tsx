@@ -1,18 +1,20 @@
 import { ModalProps, Flex, Box } from "@chakra-ui/react"
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
 
 const animationDuration = 300
 export function Drawer({ isOpen, onClose, children }: ModalProps) {
-  const modalRef = useRef<HTMLDivElement>()
+  const [display, setDisplay] = useState<"none" | "flex">("none")
+  const [animation, setAnimation] = useState<"slade-x-out" | "slade-x-in">(
+    "slade-x-out"
+  )
   useEffect(() => {
-    const boxRef = modalRef.current.childNodes[0] as HTMLDivElement
     if (isOpen) {
-      modalRef.current.style.display = "flex"
-      boxRef.style.animation = `${animationDuration}ms forwards slade-x-in`
+      setDisplay("flex")
+      setAnimation("slade-x-in")
     } else {
-      boxRef.style.animation = `${animationDuration}ms forwards slade-x-out`
+      setAnimation("slade-x-out")
       setTimeout(() => {
-        modalRef.current.style.display = isOpen ? "flex" : "none"
+        setDisplay("none")
       }, animationDuration)
     }
   }, [isOpen])
@@ -39,10 +41,11 @@ export function Drawer({ isOpen, onClose, children }: ModalProps) {
           position="fixed"
           zIndex={5}
           inset="0"
-          ref={modalRef}
           onClick={onClose}
+          display={display}
         >
           <Flex
+            animation={`${animationDuration}ms forwards ${animation}`}
             height="100%"
             width="15rem"
             flexShrink="0"
