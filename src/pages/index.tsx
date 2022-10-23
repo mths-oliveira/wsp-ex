@@ -29,6 +29,7 @@ import { removeAccent } from "../utils/remove-accent"
 import { IconProfile } from "../components/icon-profile"
 import { NavBar } from "../components/navbar"
 import { ToggleThemeButton } from "../components/toggle-theme-button"
+import { ToggleThemeItem } from "../components/toggle-theme-item"
 
 const classesController = new ClassesController()
 const timezoneController = new TimezoneController()
@@ -79,7 +80,7 @@ export default function () {
           </Box>
           <NavBar />
           <Box as="footer" paddingY="2.25rem">
-            <ToggleThemeButton />
+            <ToggleThemeItem />
           </Box>
         </Flex>
         <Flex
@@ -87,12 +88,15 @@ export default function () {
           flexDir="column"
           overflowY="auto"
           padding={["0", "5rem"]}
+          position="relative"
         >
           <Flex
             marginY="1.5rem"
             alignItems="center"
             justifyContent="space-between"
-            display={{ sm: "none" }}
+            display={["flex", "none"]}
+            position="sticky"
+            top="0"
           >
             <IconProfile
               country={timezone.country}
@@ -100,12 +104,9 @@ export default function () {
               text={timezone.offsetName}
               onOpen={modal.onOpen}
             />
+            <ToggleThemeButton />
           </Flex>
-          <Flex
-            flexDir="column"
-            overflowY="auto"
-            height={["calc(100% - (64px + 56px + 48px))", "100%"]}
-          >
+          <Flex flexDir="column" overflowY="auto" height="100%">
             <Heading
               fontSize={["1.25rem", "1.5rem"]}
               margin={["1rem", "0"]}
@@ -113,7 +114,6 @@ export default function () {
             >
               Tabela de Horários
             </Heading>
-
             <Box
               border="sm"
               borderRadius="md"
@@ -154,15 +154,18 @@ export default function () {
               </Table>
             </Box>
           </Flex>
-          <Flex as="footer" display={{ sm: "none" }}>
+          <Flex
+            as="footer"
+            display={{ sm: "none" }}
+            position="sticky"
+            bottom="0"
+          >
             <NavBar
               flexDir="row"
               justifyContent="center"
               borderTop="sm"
               borderColor="borderColor"
-            >
-              <ToggleThemeButton />
-            </NavBar>
+            />
           </Flex>
         </Flex>
       </Flex>
