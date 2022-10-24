@@ -66,6 +66,7 @@ export default function () {
         position={["fixed", "initial"]}
         top="0"
         width="100%"
+        bg="primary"
       >
         <Image
           src="favicon.png"
