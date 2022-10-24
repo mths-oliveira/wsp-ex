@@ -63,6 +63,9 @@ export default function () {
         alignItems="center"
         justifyContent="space-between"
         paddingX="0.5rem"
+        position={["fixed", "initial"]}
+        top="0"
+        width="100%"
       >
         <Image
           src="favicon.png"
@@ -156,6 +159,7 @@ export default function () {
         position="fixed"
         bottom="0"
         width="100%"
+        bg="primary"
       >
         <NavBar
           height="4rem"
