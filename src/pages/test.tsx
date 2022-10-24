@@ -150,13 +150,18 @@ export default function () {
           </TableContainer>
         </Box>
       </Flex>
-      <Box as="footer">
+      <Box
+        as="footer"
+        gridArea="bottom"
+        position="fixed"
+        bottom="0"
+        width="100%"
+      >
         <NavBar
           height="4rem"
           display={["flex", "none"]}
           justifyContent="space-evenly"
           alignItems="center"
-          gridArea="bottom"
           borderTop="sm"
           borderColor="tertiary"
         />
