@@ -3,22 +3,22 @@ import { Stack, StackProps } from "@chakra-ui/react"
 export function MenuItem(props: StackProps) {
   return (
     <Stack
-      spacing="1rem"
-      direction="row"
+      spacing={["0.25rem", "1rem"]}
+      direction={["column", "row"]}
       alignItems="center"
-      padding={["1rem", "1rem 1.5rem"]}
-      width={["fit-content", "100%"]}
+      padding={["0.5rem", "1rem 1.5rem"]}
+      width="100%"
       cursor="pointer"
       _hover={{
         bg: "secondary",
       }}
       sx={{
         "&>p": {
-          display: ["none", "inline"],
           whiteSpace: "nowrap",
+          fontSize: ["12px", "1rem"],
         },
         "&>svg": {
-          fontSize: ["1.5rem", "1.25rem"],
+          fontSize: "1.25rem",
         },
       }}
       {...props}

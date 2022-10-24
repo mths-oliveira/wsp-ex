@@ -17,7 +17,14 @@ export function IconButton({
   ...rest
 }: IconButtonProps) {
   return (
-    <Center as="button" width="48px" height="48px" borderRadius="md" {...rest}>
+    <Center
+      as="button"
+      width="3rem"
+      height="3rem"
+      borderRadius="md"
+      flexShrink="0"
+      {...rest}
+    >
       <Icon as={icon} fontSize={fontSize} />
     </Center>
   )

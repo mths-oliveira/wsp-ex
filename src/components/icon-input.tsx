@@ -9,6 +9,7 @@ export function IconInput(props: InputProps) {
       align="center"
       paddingY="0.25rem"
       borderRadius="6px"
+      display={props.display}
     >
       <Input
         id="modal-input"

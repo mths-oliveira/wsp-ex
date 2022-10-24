@@ -1,5 +1,13 @@
-import { Box, List, ListItem, ListProps, Text } from "@chakra-ui/react"
 import {
+  Box,
+  List,
+  ListItem,
+  ListProps,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react"
+import {
+  MdCalendarToday,
   MdOutlineCalculate,
   MdOutlineMonetizationOn,
   MdOutlineSchedule,
@@ -9,28 +17,35 @@ import { MenuItem } from "./menu-item"
 interface NavBarProps extends ListProps {}
 
 export function NavBar({ children, ...rest }: NavBarProps) {
+  const isMobile = useBreakpointValue([true, false])
+
   return (
-    <Box as="nav" height="100%" width="100%">
-      <List display="flex" flexDir="column" {...rest}>
+    <Box as="nav">
+      <List display="flex" {...rest}>
         <ListItem>
           <MenuItem>
-            <MdOutlineSchedule />
-            <Text>Tabela de Horários</Text>
+            <MdOutlineCalculate />
+            <Text>{isMobile ? "Calcular" : "Calcular Pacote"}</Text>
           </MenuItem>
         </ListItem>
         <ListItem>
           <MenuItem>
             <MdOutlineMonetizationOn />
-            <Text>Tabela de Preços</Text>
+            <Text>{isMobile ? "Preços" : "Tabela de Preços"}</Text>
           </MenuItem>
         </ListItem>
         <ListItem>
           <MenuItem>
-            <MdOutlineCalculate />
-            <Text>Calcular Pacote</Text>
+            <MdCalendarToday />
+            <Text>{isMobile ? "Agendar" : "Agendar Aulas"}</Text>
           </MenuItem>
         </ListItem>
-        {children && <ListItem>{children}</ListItem>}
+        <ListItem>
+          <MenuItem>
+            <MdOutlineSchedule />
+            <Text>{isMobile ? "Horários" : "Tabela de Horários"}</Text>
+          </MenuItem>
+        </ListItem>
       </List>
     </Box>
   )

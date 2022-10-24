@@ -19,7 +19,7 @@ export const theme = extendTheme({
         default: "#f0f0f0",
         _dark: "rgba(255,255,255,0.1)",
       },
-      borderColor: {
+      tertiary: {
         default: "rgba(0,0,0,0.1)",
         _dark: "rgba(255,255,255,0.1)",
       },
@@ -36,10 +36,13 @@ export const theme = extendTheme({
     xl: "80em",
   },
   borders: {
-    sm: "1px solid #fff",
+    sm: "1px solid",
   },
   styles: {
     global: {
+      "*": {
+        borderColor: "tertiary",
+      },
       "html, body": {
         color: "text",
         bg: "primary",

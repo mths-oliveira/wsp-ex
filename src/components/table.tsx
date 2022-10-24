@@ -15,7 +15,7 @@ export function Table({ sx, children, ...props }: TableProps) {
           padding: ["1rem", "1rem 1.5rem"],
         },
         "&>*>tr>*": {
-          borderColor: "borderColor",
+          borderColor: "tertiary",
         },
         ...sx,
       }}

@@ -11,9 +11,16 @@ import {
   Th,
   Thead,
   Tr,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react"
-import { MdArrowBack } from "react-icons/md"
+import {
+  MdArrowBack,
+  MdDarkMode,
+  MdOutlineDarkMode,
+  MdOutlineLightMode,
+  MdSearch,
+} from "react-icons/md"
 import { useState } from "react"
 import { ClassesController } from "../backend/controllers/classes"
 import { Timezone, TimezoneImp } from "../backend/models/timezone"
@@ -38,6 +45,7 @@ const initialTimezone = new TimezoneImp("America/Sao_Paulo")
 
 export default function () {
   const modal = useDisclosure()
+  const { toggleColorMode, colorMode } = useColorMode()
   const [timezone, setTimezone] = useState(initialTimezone)
   const classes = classesController.findAllClassesInTimeZone(timezone.offset)
   const [query, setQuery] = useState("")
@@ -57,6 +65,21 @@ export default function () {
     <>
       <Flex width="100vw" height="100vh">
         <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          position="sticky"
+          top="0"
+          borderBottom="sm"
+          borderColor="borderColor"
+          padding="0.25rem"
+        >
+          <IconButton
+            icon={colorMode === "dark" ? MdOutlineDarkMode : MdOutlineLightMode}
+            onClick={toggleColorMode}
+          />
+          <IconButton icon={MdSearch} onClick={modal.onOpen} />
+        </Flex>
+        <Flex
           as="aside"
           display={["none", "flex"]}
           height="100%"
@@ -69,49 +92,24 @@ export default function () {
           onClick={(e) => {
             e.stopPropagation()
           }}
-        >
-          <Box as="header" padding="2.25rem 1rem">
-            <IconProfile
-              country={timezone.country}
-              title={timezone.city}
-              text={timezone.offsetName}
-              onOpen={modal.onOpen}
-            />
-          </Box>
-          <NavBar />
-          <Box as="footer" paddingY="2.25rem">
-            <ToggleThemeItem />
-          </Box>
-        </Flex>
+        ></Flex>
         <Flex
           flexGrow="1"
-          maxHeight="100vh"
           flexDir="column"
           overflowY="auto"
-          padding={["0", "5rem"]}
           position="relative"
         >
-          <Flex
-            marginY="1.5rem"
-            alignItems="center"
-            justifyContent="space-between"
-            display={["flex", "none"]}
-            position="sticky"
-            top="0"
-          >
-            <IconProfile
-              country={timezone.country}
-              title={timezone.city}
-              text={timezone.offsetName}
-              onOpen={modal.onOpen}
-            />
-            <ToggleThemeButton />
-          </Flex>
           <Flex flexDir="column" overflowY="auto" height="100%">
+            <Profile
+              marginY="1rem"
+              country={timezone.country}
+              text={timezone.offsetName}
+              title={timezone.city}
+            />
             <Heading
-              fontSize={["1.25rem", "1.5rem"]}
-              margin={["1rem", "0"]}
-              marginBottom={{ sm: "1.5rem" }}
+              fontSize="1.5rem"
+              marginLeft={["1rem", "0"]}
+              marginBottom="1.5rem"
             >
               Tabela de Horários
             </Heading>
@@ -163,7 +161,7 @@ export default function () {
           >
             <NavBar
               flexDir="row"
-              justifyContent="center"
+              justifyContent="space-evenly"
               borderTop="sm"
               borderColor="borderColor"
             />
