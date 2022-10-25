@@ -50,6 +50,10 @@ export default function () {
   const classes = classesController.findAllClassesInTimeZone(timezone.offset)
   return (
     <Grid
+      ref={(ref) => {
+        if (!ref) return
+        ref.style.height = `${window.innerHeight}px`
+      }}
       height="100vh"
       gridTemplateColumns={["1fr", "15rem 1fr"]}
       gridTemplateRows={["3.5rem 1fr 4rem", "3.5rem 1fr"]}
@@ -63,7 +67,6 @@ export default function () {
         alignItems="center"
         justifyContent="space-between"
         paddingX="0.5rem"
-        bg="primary"
       >
         <Image
           src="favicon.png"
@@ -151,17 +154,10 @@ export default function () {
           </TableContainer>
         </Box>
       </Flex>
-      <Box
-        as="footer"
-        gridArea="bottom"
-        position="fixed"
-        bottom="0"
-        width="100%"
-        bg="primary"
-      >
+      <Box as="footer" display={["initial", "none"]}>
         <NavBar
+          gridArea="bottom"
           height="4rem"
-          display={["flex", "none"]}
           justifyContent="space-evenly"
           alignItems="center"
           borderTop="sm"
