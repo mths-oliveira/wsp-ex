@@ -6,6 +6,7 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react"
+import Link from "next/link"
 import {
   MdCalendarToday,
   MdOutlineCalculate,
@@ -28,24 +29,28 @@ export function NavBar({ children, ...rest }: NavBarProps) {
             <Text>{isMobile ? "Calcular" : "Calcular Pacote"}</Text>
           </MenuItem>
         </ListItem>
-        <ListItem>
-          <MenuItem>
-            <MdOutlineMonetizationOn />
-            <Text>{isMobile ? "Preços" : "Tabela de Preços"}</Text>
-          </MenuItem>
-        </ListItem>
+        <Link href="/">
+          <ListItem>
+            <MenuItem>
+              <MdOutlineMonetizationOn />
+              <Text>{isMobile ? "Preços" : "Tabela de Preços"}</Text>
+            </MenuItem>
+          </ListItem>
+        </Link>
         <ListItem>
           <MenuItem>
             <MdCalendarToday />
             <Text>{isMobile ? "Agendar" : "Agendar Aulas"}</Text>
           </MenuItem>
         </ListItem>
-        <ListItem>
-          <MenuItem>
-            <MdOutlineSchedule />
-            <Text>{isMobile ? "Horários" : "Tabela de Horários"}</Text>
-          </MenuItem>
-        </ListItem>
+        <Link href="horarios">
+          <ListItem>
+            <MenuItem>
+              <MdOutlineSchedule />
+              <Text>{isMobile ? "Horários" : "Tabela de Horários"}</Text>
+            </MenuItem>
+          </ListItem>
+        </Link>
       </List>
     </Box>
   )

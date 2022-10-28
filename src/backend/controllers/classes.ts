@@ -1,4 +1,5 @@
 import data from "../database/classes.json"
+import { Timezone } from "../models/timezone"
 
 interface Classes {
   weekdays: string
@@ -7,16 +8,12 @@ interface Classes {
 }
 
 export class ClassesController {
-  findAllClassesInTimeZone(offset: number): Classes[] {
+  findAllClassesInTimeZone(timezone: Timezone): Classes[] {
     return data.classes.map((classes) => {
-      const firstClassSchedule = convertTimeByOffset(
-        classes.firstClassSchedule,
-        offset
+      const firstClassSchedule = timezone.convertTime(
+        classes.firstClassSchedule
       )
-      const lastClassSchedule = convertTimeByOffset(
-        classes.lastClassSchedule,
-        offset
-      )
+      const lastClassSchedule = timezone.convertTime(classes.lastClassSchedule)
       return {
         firstClassSchedule,
         lastClassSchedule,
@@ -24,14 +21,4 @@ export class ClassesController {
       }
     })
   }
-}
-
-const date = new Date()
-const brasiliaTimeOffset = -3 * 60
-function convertTimeByOffset(time: string, offset: number) {
-  const [hoursStr, minutesStr] = time.split(":")
-  date.setHours(Number(hoursStr))
-  date.setMinutes(offset - brasiliaTimeOffset + Number(minutesStr))
-  const timeConverted = date.toTimeString().substring(0, 5)
-  return timeConverted
 }

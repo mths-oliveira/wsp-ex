@@ -5,6 +5,7 @@ export interface Timezone {
   city: string
   offset: number
   offsetName: string
+  convertTime: (time: string) => string
 }
 
 const date = new Date()
@@ -15,6 +16,7 @@ const utc = {
 }
 
 export class TimezoneImp implements Timezone {
+  private static brasiliaTimeOffset = -3 * 60
   public city: string
   public country: string
   public offset: number
@@ -27,6 +29,16 @@ export class TimezoneImp implements Timezone {
     this.country = country
     this.offset = offset
     this.offsetName = offsetName
+  }
+  convertTime(time: string) {
+    const date = new Date()
+    const [hoursStr, minutesStr] = time.split(":")
+    date.setHours(Number(hoursStr))
+    date.setMinutes(
+      this.offset - TimezoneImp.brasiliaTimeOffset + Number(minutesStr)
+    )
+    const timeConverted = date.toTimeString().substring(0, 5)
+    return timeConverted
   }
   private static findTimeZoneOffset(timeZone: string) {
     const [dayStr, timeStr] = date

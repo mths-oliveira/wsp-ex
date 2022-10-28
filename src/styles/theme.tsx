@@ -40,12 +40,10 @@ export const theme = extendTheme({
   },
   styles: {
     global: {
-      "*": {
-        borderColor: "tertiary",
-      },
       "html, body": {
         color: "text",
         bg: "primary",
+        borderColor: "tertiary",
         fontWeight: 500,
         scrollBehavior: "smooth",
       },

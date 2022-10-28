@@ -1,5 +1,5 @@
 import { ModalProps, Center, Flex } from "@chakra-ui/react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 const animationDuration = 200
 export function Modal({ isOpen, onClose, children }: ModalProps) {
@@ -7,10 +7,6 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
       setDisplay("flex")
-      const input = document.getElementById("modal-input")
-      setTimeout(() => {
-        input.focus()
-      }, animationDuration)
     } else {
       setTimeout(() => {
         setDisplay("none")
@@ -39,16 +35,6 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
         borderRadius="md"
         onClick={(e) => {
           e.stopPropagation()
-        }}
-        sx={{
-          "&>ul": {
-            position: "relative",
-            overflowY: "auto",
-            height: "100%",
-          },
-          "&>div": {
-            padding: "1.5rem 1rem",
-          },
         }}
       >
         {children}

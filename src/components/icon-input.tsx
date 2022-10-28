@@ -1,7 +1,14 @@
 import { Flex, Icon, Input, InputProps } from "@chakra-ui/react"
+import { MutableRefObject } from "react"
 import { MdSearch } from "react-icons/md"
 
-export function IconInput(props: InputProps) {
+interface IconInputProps extends InputProps {
+  inputRef?: (
+    ref: HTMLInputElement
+  ) => void | MutableRefObject<HTMLInputElement>
+}
+
+export function IconInput({ display, inputRef, ...rest }: IconInputProps) {
   return (
     <Flex
       flex={1}
@@ -9,10 +16,10 @@ export function IconInput(props: InputProps) {
       align="center"
       paddingY="0.25rem"
       borderRadius="6px"
-      display={props.display}
+      display={display}
     >
       <Input
-        id="modal-input"
+        ref={inputRef}
         bg="transparent"
         border="none"
         textTransform="capitalize"
@@ -20,7 +27,7 @@ export function IconInput(props: InputProps) {
         _placeholder={{
           textTransform: "initial",
         }}
-        {...props}
+        {...rest}
       />
       <Icon as={MdSearch} fontSize="1.5rem" marginRight="1rem" />
     </Flex>
